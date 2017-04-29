@@ -1,0 +1,46 @@
+{%extends 'vegetables/base.html' %}
+<html>
+<head>
+    <title> Cart </title>
+
+</head>
+<body>
+    {%block content %}
+    <h1 class="text-center"> Cart </h1>
+
+    {% for c in cart %}
+
+
+  <div class="col-sm-6 col-md-2 col-md-offset-1" style="padding:5px;" >
+    <div class="thumbnail">
+      <img src="{{c.veg.photo }}" height="300" width="300" alt="{{c.veg.name}}">
+      <div class="caption">
+        <h3 id="rand">{{c.veg.name}} {%if c.veg.organic %}<font size="3" color='green' >Organic</font>{%endif%}</h3>
+        <p>{{c.veg.category}}</p>
+        {%if user.subscription%}<p>Your price: Rs.{{c.veg.subpricekg}}</p>{%else%}
+        <p>₹{{c.veg.pricekg}}</p>{%endif%}
+
+     <p>Quantity:{{c.quantity}}</p>
+      <p>Total:₹{{c.total}}</p>
+<form method="post" action="{%url 'cart:cart' %}">{%csrf_token%}
+    <input type="hidden"  name="delbutton" value="{{c.id}}" ><br>
+<p><input type="submit" class="btn btn-warning navbar-btn"  value="Delete" ></p>
+</form>
+
+      </div>
+    </div>
+  </div>
+
+  {%endfor%}
+<div class="row col-md-10 col-md-offset-1">
+  <p>Grand Total: ₹{{grandTotal}}</p>
+  {%if user.subscription%}<p> You saved : ₹ {{saved}}{%endif%}
+
+          <p><a class="btn btn-primary btn-lg" href="{%url 'veg_order:confirm_order' %}" role="button">Order</a></p>
+
+  </div>
+    {%endblock%}
+</body>
+
+
+</html>

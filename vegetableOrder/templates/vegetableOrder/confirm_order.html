@@ -1,0 +1,82 @@
+{% extends 'vegetables/base.html' %}
+<html>
+<head>
+    <title>
+        Order Confirmation
+    </title>
+</head>
+<body>
+{%block content%}
+<h1 class='text-center'> Order Confirmation </h1>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+    <span class="sr-only">60% Complete</span>
+  </div>
+</div>
+
+<h2 class="text-center">Your Items</h2><hr>
+<table class="table table-striped table-hover table-bordered" >
+    <tbody>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+
+            <th>Total Price</th>
+        </tr>
+        {%for c in cart %}
+        <tr>
+
+            <td>{{c.veg.name}}</td>
+            <td>{{c.quantity}} Kg</td>
+            <td>₹{{c.total}}</td>
+        </tr>
+        {%endfor%}
+        <tr>
+              <th colspan="2"><span class="pull-right">Total</span></th>
+              <th>₹{{gt}}</th>
+          </tr>
+
+</table>
+
+</div>
+<div class='container col-md-6 col-md-offset-1 input-group-lg' style="border:1px solid black;">
+    <h2 class="col-md-11 col-md-offset-0 input-group-lg text-center">Please confirm your details </h2>
+<form method="post" action="{%url 'veg_order:process_order' %}">{%csrf_token%}
+    {{form.errors}}
+    <div class="input-group col-md-11 col-md-offset-0 input-group-lg">
+  <span class="input-group-addon" id="basic-addon1">First name</span>
+  <input type="text" class="form-control" name="first_name" placeholder="First Name" aria-describedby="basic-addon1",
+  value="{% if  user.user_profile  %}{{user.user_profile.first_name}}{% endif %}">
+</div><br>
+<div class="input-group col-md-11 col-md-offset-0 input-group-lg">
+<span class="input-group-addon" id="basic-addon1">Last Name</span>
+<input type="text" class="form-control" name="last_name" placeholder="Last name" aria-describedby="basic-addon1",
+value="{% if  user.user_profile  %}{{user.user_profile.last_name}}{% endif %}">
+</div><br>
+<div class="input-group col-md-11 col-md-offset-0 input-group-lg">
+<span class="input-group-addon" id="basic-addon1">Address Line 1</span>
+<input type="text" class="form-control" name="address_line1" placeholder="Address Line 1" aria-describedby="basic-addon1",
+value="{% if  user.user_profile  %}{{user.user_profile.address_line1}}{% endif %}">
+</div><br>
+<div class="input-group col-md-11 col-md-offset-0 input-group-lg">
+<span class="input-group-addon" id="basic-addon1">Address Line 2</span>
+<input type="text" class="form-control" name="address_line2"  placeholder="Address Line 2" aria-describedby="basic-addon1",
+value="{% if  user.user_profile  %}{{user.user_profile.address_line2}}{% endif %}">
+</div><br>
+<div class="input-group col-md-11 col-md-offset-0 input-group-lg">
+<span class="input-group-addon" id="basic-addon1">Pincode</span>
+<input type="text" class="form-control" name="pincode" placeholder="pincode" aria-describedby="basic-addon1",
+value="{% if  user.user_profile  %}{{user.user_profile.pincode}}{% endif %}">
+</div><br>
+<div class="col-md-11 col-md-offset-0 input-group-lg">
+    Your City: {{form.city}}<br><br>
+    Your State: {{form.state}}<br>
+    <input type="submit" class="btn btn-success navbar-btn btn-lg"  value="Confirm and Order" >
+</div>
+</div>
+
+</form>
+
+{%endblock%}
+</body>
+</html>

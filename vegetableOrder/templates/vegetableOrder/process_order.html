@@ -1,0 +1,23 @@
+{% extends 'vegetables/base.html' %}
+<html>
+<head>
+    <title>
+        Order
+    </title>
+</head>
+<body>
+    {%block content %}
+<h1> Your order has been confirmed. </h1>
+{{profile.first_name }}</br>
+{{profile.city}}
+
+
+<h3> {{order.total}}</h3>
+
+<h3> {{order.name}}</h3>
+<h3>{{order.quantity}}</h3>
+
+
+    {%endblock%}
+</body>
+</html>
